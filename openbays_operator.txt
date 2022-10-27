@@ -1,0 +1,17 @@
+1.上传分类好的数据集
+2.创建容器
+1）绑定数据
+2）导入外部仓库：https://github.com/helloguoqi/yolov5_2022.git
+3.打开终端，配置环境
+cd yolov5_2022/
+pip install -r requirements.txt
+pip install timm
+3.修改相关路径
+data/findpeople.yaml数据集路径，上传新的数据集都要进行修改
+--weights Pretrained_Checkpoints/yolov5n.pt现成预权重路径，一般不修改
+4.开始训练
+python train.py --data data/findpeople.yaml --imgsz 640 --weights Pretrained_Checkpoints/yolov5n.pt --cfg models/my_yolov5n.yaml --epoch 1000 --batch-size 8
+--imgsz 640 图片大小，640，一般不做修改
+--cfg models/my_yolov5n.yaml 模型的配置参数，一般不作修改
+--epoch 1000 训练次数，一般在1000次即可
+--batch-size 8 每次训练的图片数量，根据gpu计算能力修改，（1，2，4，8，16，32，...）
