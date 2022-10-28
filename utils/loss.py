@@ -204,7 +204,7 @@ class ComputeLoss:
             #         [0.70508, 0.90479],
             #         [1.44629, 1.11914]], device='cuda:0')
 
-            anchors = self.anchors[i]
+            anchors,shape = self.anchors[i],p[i].shape
             gain[2:6] = torch.tensor(p[i].shape)[[3, 2, 3, 2]]  # xyxy gain [1 1 76 76 76 76 1]
 
             # Match targets to anchors
@@ -242,7 +242,7 @@ class ComputeLoss:
 
             # Append
             a = t[:, 6].long()  # anchor indices
-            indices.append((b, a, gj.clamp_(0, gain[3] - 1), gi.clamp_(0, gain[2] - 1)))  # image, anchor, grid xy
+            indices.append((b, a, gj.clamp_(0, gain[2] - 1), gi.clamp_(0, gain[3] - 1)))  # image, anchor, grid xy
             tbox.append(torch.cat((gxy - gij, gwh), 1))  # box
             anch.append(anchors[a])  # anchors
             tcls.append(c)  # class
